@@ -1,7 +1,7 @@
 use clap::{crate_version, App, Arg, ArgMatches, SubCommand};
 use mdbook::errors::Error;
 use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
-use mdbook_open_on_gitXX::OpenOn;
+use mdbook_open_on_git_xx::OpenOn;
 
 use std::io;
 use std::process;

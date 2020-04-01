@@ -1,13 +1,13 @@
 use clap::{crate_version, App, Arg, ArgMatches, SubCommand};
 use mdbook::errors::Error;
 use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
-use mdbook_open_on_gh::OpenOn;
+use mdbook_open_on_gitXX::OpenOn;
 
 use std::io;
 use std::process;
 
 pub fn make_app() -> App<'static, 'static> {
-    App::new("mdbook-open-on-gh")
+    App::new("mdbook-open-on-git-xx")
         .version(crate_version!())
         .about("mdbook preprocessor to add links to open the page on GitHub")
         .subcommand(

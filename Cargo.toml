@@ -1,11 +1,11 @@
 [package]
-name = "mdbook-open-on-gh"
-version = "1.0.2-alpha.0"
-authors = ["Jan-Erik Rediger <janerik@fnordig.de>"]
-description = "mdbook preprocessor to add a open-on-github link on every page"
+name = "mdbook-open-on-git-xx"
+version = "0.0.1"
+authors = ["gameendman <gameendman99@gmail.com>","Jan-Erik Rediger <janerik@fnordig.de>"]
+description = "mdbook preprocessor to add a open-on-git-xx link on every page, which is a fork of mdbook-open-on-gh"
 license = "MPL-2.0"
-homepage = "https://github.com/badboy/mdbook-open-on-gh"
-repository = "https://github.com/badboy/mdbook-open-on-gh"
+homepage = "https://github.com/gameendman/mdbook-open-on-gh"
+repository = "https://github.com/gameendman/mdbook-open-on-gh"
 edition = "2018"
 
 [dependencies]

@@ -8,7 +8,7 @@ pub struct OpenOn;
 
 impl Preprocessor for OpenOn {
     fn name(&self) -> &str {
-        "open-on-gh"
+        "open-on-git-xx"
     }
 
     fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
@@ -23,15 +23,25 @@ impl Preprocessor for OpenOn {
             None => return Ok(book),
             Some(url) => url,
         };
+        let gitreponame = match ctx.config.get("output.html.git-repository-name") {
+            None => return Ok(book),
+            Some(name) => name,
+        };
         let repository_url = match repository_url {
             toml::Value::String(s) => s,
             _ => return Ok(book),
         };
-        log::debug!("Repository URL: {}", repository_url);
+         let gitreponame = match gitreponame{
+            toml::Value::String(s) => s,
+            _ => return Ok(book),
+        };
 
-        if repository_url.find("github.com").is_none() {
-            return Ok(book)
-        }
+        log::debug!("Repository URL: {}", repository_url);
+        log::debug!("gitreponame: {}", gitreponame);
+
+       // if repository_url.find("github.com").is_none() {
+       //     return Ok(book)
+       // }
 
         let mut res = None;
         book.for_each_mut(|item: &mut BookItem| {
@@ -40,7 +50,7 @@ impl Preprocessor for OpenOn {
             }
 
             if let BookItem::Chapter(ref mut chapter) = *item {
-                res = Some(open_on(&git_root, &src_root, &repository_url, chapter).map(|md| {
+                res = Some(open_on(&git_root, &src_root, &repository_url, &gitreponame, chapter).map(|md| {
                     chapter.content = md;
                 }));
             }
@@ -50,7 +60,7 @@ impl Preprocessor for OpenOn {
     }
 }
 
-fn open_on(git_root: &Path, src_root: &Path, base_url: &str, chapter: &mut Chapter) -> Result<String> {
+fn open_on(git_root: &Path, src_root: &Path, base_url: &str, gitreponame: &str, chapter: &mut Chapter) -> Result<String> {
     let content = &chapter.content;
     let path = match src_root.join(&chapter.path).canonicalize() {
         Ok(path) => path,
@@ -60,11 +70,11 @@ fn open_on(git_root: &Path, src_root: &Path, base_url: &str, chapter: &mut Chapt
     log::trace!("Chapter path: {}", path.display());
     log::trace!("Relative path: {}", relpath.display());
 
-    let url = format!("{}/edit/master/{}", base_url, relpath.display());
+    let url = format!("{}/_edit/master/{}", base_url, relpath.display());
     log::trace!("URL: {}", url);
 
-    let link = format!("<a href=\"{}\">Edit this file on GitHub.</a>", url);
-    let content = format!("{}\n<footer id=\"open-on-gh\">Found a bug? {}</footer>", content, link);
+    let link = format!("<a href=\"{}\">Edit this file on {} .</a>", url, gitreponame);
+    let content = format!("{}\n<footer id=\"open-on-git-xx\">Found a bug? {}</footer>", content, link);
 
     Ok(content)
 }
